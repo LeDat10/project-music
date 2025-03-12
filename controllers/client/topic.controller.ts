@@ -7,9 +7,8 @@ export const index = async (req: Request, res: Response) => {
         deleted: false
     });
 
-    console.log(topics);
-
     res.render("client/pages/topics/index", {
-        titlePage: "Trang chủ đề bài hát"
+        titlePage: "Trang chủ đề bài hát",
+        topics: topics
     });
 };

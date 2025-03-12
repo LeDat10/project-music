@@ -1,3 +1,44 @@
-h1 {
-    margin: 2px;
+.header {
+    box-shadow: 0px 1px 0px gray;
+    padding: 15px 20px;
+}
+
+.header .inner-logo img {
+    max-height: 50px;
+    max-width: 100%;
+}
+
+.header .inner-menu .menu {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.header .inner-menu ul li {
+    margin-left: 20px;
+}
+
+.header .inner-menu ul li a {
+    font-size: 17px;
+}
+
+.footer {
+    text-align: center;
+    padding: 10px 0px;
+    background-color: orange;
+}
+
+
+.box-head {
+    margin-bottom: 30px;
+}
+
+.box-head .inner-title {
+    margin-bottom: 0;
+    font-size: 28px;
+    font-weight: 600;
+    color: green;
 }
