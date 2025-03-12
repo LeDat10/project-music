@@ -7,6 +7,8 @@ export const index = async (req: Request, res: Response) => {
         deleted: false
     });
 
+
+    
     res.render("client/pages/topics/index", {
         titlePage: "Trang chủ đề bài hát",
         topics: topics
