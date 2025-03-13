@@ -3,6 +3,8 @@ import { Request, Response, Router } from "express";
 import Topic from "../../models/topic.model";
 import Song from "../../models/song.model";
 import Singer from "../../models/singer.model";
+import FavoriteSong from "../../models/favorite-song.model";
+
 
 // [GET] /songs/:slugTopic
 export const list = async (req: Request, res: Response) => {
@@ -54,10 +56,79 @@ export const detail = async (req: Request, res: Response) => {
         deleted: false
     }).select("title");
 
+    const favoriteSong = await FavoriteSong.findOne({
+        songId: song.id
+    });
+
+    song["isFavoriteSong"] = favoriteSong ? true : false;
+
     res.render("client/pages/songs/detail", {
         titlePage: "Chi tiết bài hát",
         song: song,
         singer: singer,
         topic: topic
+    });
+};
+
+// [PATCH] /songs/like/:typeLike/:idSong
+export const like = async (req: Request, res: Response) => {
+    const idSong: string = req.params.idSong;
+    const typeLike: string = req.params.typeLike;
+
+    const song = await Song.findOne({
+        _id: idSong,
+        status: "active",
+        deleted: false
+    });
+
+    const newLike = typeLike === "like" ? song.like + 1 : song.like - 1;
+
+    await Song.updateOne({
+        _id: idSong
+    }, {
+        like: newLike
+    });
+
+    res.json({
+        code: 200,
+        message: "Thành công!",
+        newLike: newLike
+    });
+};
+
+// [PATCH] /songs/like/:typeFavorite/:idSong
+export const favorite = async (req: Request, res: Response) => {
+    const idSong: string = req.params.idSong;
+    const typeFavorite: string = req.params.typeFavorite;
+
+    const existFavoriteSong = await FavoriteSong.findOne({
+        songId: idSong
+    });
+
+    switch (typeFavorite) {
+        case "favorite":
+            if (!existFavoriteSong) {
+                const record = new FavoriteSong({
+                    // userId: "",
+                    songId: idSong
+                });
+
+                await record.save();
+            }
+            break;
+        case "unfavorite":
+            if(existFavoriteSong) {
+                await FavoriteSong.deleteOne({
+                    songId: idSong
+                });
+            }
+            break;
+        default:
+            break;
+    }
+
+    res.json({
+        code: 200,
+        message: "Thành công!",
     });
 };
