@@ -118,6 +118,23 @@
     color: #585858;
 }
 
+.song-item .inner-content .inner-heart {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 2px;
+    cursor: pointer;
+};
+
+.song-item .inner-content .inner-heart.active span{
+    display: inline-block;
+    color: #b90000;
+}
+
+.song-item .inner-content .inner-heart.active i {
+    font-weight: 900;
+    color: #b90000;
+
+}
 /* End song-item */
 
 /* singer-detail */
