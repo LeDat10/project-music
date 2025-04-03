@@ -30,6 +30,20 @@ if (aplayer) {
     ap.on('play', () => {
         avatar.style.animationPlayState = "running";
     });
+
+    ap.on('ended', () => {
+        const link = `/songs/listen/${dataSong._id}`;
+        const option = {
+            method: "PATCH"
+        }
+
+        fetch(link, option)
+            .then(res => res.json())
+            .then(data => {
+                const elementListenSpan = document.querySelector(".singer-detail .inner-listen span");
+                elementListenSpan.innerHTML = `${data.listen} Lượt nghe`;
+            });
+    });
 }
 // End Alplayer
 
